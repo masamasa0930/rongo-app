@@ -4,6 +4,7 @@
 :root{
   --ground:#F5F7F6; --surface:#FFFFFF; --ink:#1B2026; --muted:#65707A; --line:#DCE2E1;
   --ai:#1F3A5F; --ai-soft:#E6ECF3; --on-ai:#FFFFFF; --shu:#B3362C;
+  --moku:#2C6A58; --ka:#B3362C; --do:#94701C; --gon:#737A83; --sui:#1B2026;
   --mincho:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
   --gothic:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
 }
@@ -11,11 +12,13 @@
   :root:not([data-theme="light"]){
     --ground:#11151A; --surface:#1A2028; --ink:#E9ECE8; --muted:#97A1AA; --line:#2C343D;
     --ai:#9BB9E2; --ai-soft:#222C38; --on-ai:#10151B; --shu:#E5766A;
+    --moku:#7FC2A8; --ka:#E5766A; --do:#D6B25E; --gon:#B4BAC2; --sui:#E9ECE8;
   }
 }
 :root[data-theme="dark"]{
   --ground:#11151A; --surface:#1A2028; --ink:#E9ECE8; --muted:#97A1AA; --line:#2C343D;
   --ai:#9BB9E2; --ai-soft:#222C38; --on-ai:#10151B; --shu:#E5766A;
+    --moku:#7FC2A8; --ka:#E5766A; --do:#D6B25E; --gon:#B4BAC2; --sui:#E9ECE8;
 }
 *{box-sizing:border-box}
 body{background:var(--ground);color:var(--ink);font-family:var(--gothic);font-size:16px;line-height:1.8;padding-inline:16px;padding-block:20px 64px}
@@ -27,8 +30,8 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 header.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .brand{font-family:var(--mincho);font-weight:700;font-size:1.5rem;letter-spacing:.08em}
 .brand small{display:block;font-family:var(--gothic);font-weight:400;font-size:.75rem;color:var(--muted);letter-spacing:.04em}
-nav.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
-nav.tabs button{padding:8px 14px;font-size:.9rem;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;white-space:nowrap;border-bottom:1px solid var(--line)}
+nav.tabs button{padding:8px 12px;font-size:.9rem;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
 nav.tabs button[aria-selected="true"]{color:var(--ai);border-bottom-color:var(--ai);font-weight:700}
 
 .search{display:flex;gap:8px}
@@ -78,6 +81,25 @@ h2{font-family:var(--mincho);font-weight:700;font-size:1.15rem;margin:0;text-wra
 .empty{color:var(--muted);font-size:.9rem;padding:20px 0}
 .morebtn{align-self:center;color:var(--ai);border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:8px 20px;font-size:.9rem}
 
+/* 五徳 */
+.tokus{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.toku{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:start;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:14px 16px;transition:border-color .15s}
+.toku:hover{border-color:var(--tc)}
+.toku .kanji{font-family:var(--mincho);font-weight:700;font-size:2.4rem;line-height:1.1;color:var(--tc);grid-row:span 3}
+.toku .gyo{font-size:.72rem;color:var(--muted);letter-spacing:.08em}
+.toku b{font-family:var(--mincho);font-size:.98rem;line-height:1.5}
+.toku .sub{font-size:.78rem;color:var(--muted);line-height:1.5}
+.toku.base{grid-column:1/-1}
+.tokuhead{display:grid;grid-template-columns:auto 1fr;column-gap:16px;align-items:center}
+.tokuhead .kanji{font-family:var(--mincho);font-weight:700;font-size:3.2rem;line-height:1;color:var(--tc)}
+.tokuhead h2{font-size:1.05rem}
+.tbadge{font-family:var(--mincho);font-weight:700;color:var(--tc);border-bottom:1px solid var(--tc);line-height:1.3;padding:0 1px}
+.chiplabel{font-size:.72rem;color:var(--muted);letter-spacing:.12em;align-self:center;margin-right:2px}
+.chuyo{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:6px;font-size:.85rem}
+.chuyo h3{font-family:var(--mincho);font-size:1rem;margin:0}
+.chuyo p{margin:0;color:var(--muted)}
+.chuyo ul{margin:0;padding-left:1.2em}
+.t-jin{--tc:var(--moku)}.t-gi{--tc:var(--gon)}.t-rei{--tc:var(--ka)}.t-chi{--tc:var(--sui)}.t-shin{--tc:var(--do)}
 .books{display:flex;flex-wrap:wrap;gap:6px}
 footer{border-top:1px solid var(--line);padding-top:16px;font-size:.75rem;color:var(--muted);line-height:1.7}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -85,15 +107,16 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:.75rem;color:
 
 <div class="wrap">
   <header class="top">
-    <div class="brand">経営者の論語<small>いまの悩みから引く、全499章</small></div>
+    <div class="brand">経営者の論語<small>いまの悩みと五徳から引く、全499章</small></div>
   </header>
 
   <div class="search">
-    <input id="q" type="search" placeholder="言葉で探す（例：部下が動かない、後継者、巧言令色）" autocomplete="off">
+    <input id="q" type="search" placeholder="言葉で探す（例：部下が動かない、後継者、義徳）" autocomplete="off">
   </div>
 
   <nav class="tabs" role="tablist">
     <button role="tab" id="tab-home" aria-selected="true" data-tab="home">悩みから</button>
+    <button role="tab" id="tab-toku" aria-selected="false" data-tab="toku">五徳から</button>
     <button role="tab" id="tab-all" aria-selected="false" data-tab="all">全章</button>
     <button role="tab" id="tab-fav" aria-selected="false" data-tab="fav">しおり</button>
   </nav>
@@ -102,7 +125,8 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:.75rem;color:
 
   <footer>
     現代語訳は下村湖人『現代訳論語』（青空文庫・著作権保護期間満了）、原文はウィキソース『論語』に拠ります。
-    書き下し文・一言訳・問い・悩みの分類は株式会社ロジック・ブレインが作成した参考情報で、学術的な定訳ではありません。
+    五徳（仁・義・礼・智・信）の考え方は株式会社ロジック・ブレインの研修体系に基づきます。
+    書き下し文・一言訳・問い・悩みと五徳の分類は株式会社ロジック・ブレインが作成した参考情報で、学術的な定訳ではありません。
   </footer>
 </div>
 
@@ -119,6 +143,15 @@ const SCENES=[
  ["fail","失敗した・逆境で折れそう","過ち、不遇、続かない"],
  ["self","自分を整えたい","怒り、驕り、焦り、言行不一致"]
 ];
+// [id, 徳, 五行, 本能, 標語, 説明]
+const TOKUS=[
+ ["jin","仁","木","守備本能","人を思いやることに素直にあれ","相手の立場に立ち、よく聞く。すべての徳の土台"],
+ ["gi","義","金","攻撃本能","正義を貫くに素直にあれ","筋道と道理のある行動。逆境で折れない勇気と決断"],
+ ["rei","礼","火","伝達本能","礼を尽くすに素直にあれ","仁を形にして伝える。礼儀、節度、自分を律する所作"],
+ ["chi","智","水","習得本能","知恵を磨くに素直にあれ","学び、聞き、偏らずに物事と人を正しく判断する"],
+ ["shin","信","土","魅力本能","人を信じるに素直にあれ","心と言葉と行いの一致。四徳が整えば自ずとついてくる"]
+];
+const tk=id=>TOKUS.find(t=>t[0]===id);
 const EMOS=["不安","怒り","孤独","迷い","焦り","落胆","慢心","疲れ"];
 const BOOKS=["学而","為政","八佾","里仁","公冶長","雍也","述而","泰伯","子罕","郷党","先進","顔淵","子路","憲問","衛霊公","季氏","陽貨","微子","子張","堯曰"];
 // 言葉から悩みへの手がかり
@@ -134,7 +167,7 @@ const HINTS={
  fail:["失敗","逆境","挫折","折れ","落ち込","不遇","続かない","諦め","あきらめ","苦し","ミス"],
  self:["怒","イライラ","いらいら","驕","焦","慢心","感情","反省","言い過ぎ","口だけ","自分を"]
 };
-// [n, 篇index, 篇内番号, 原文, 書き下し, 一言訳, 問い, scenes, emo, rel, 下村訳]
+// [n, 篇index, 篇内番号, 原文, 書き下し, 一言訳, 問い, scenes, emo, rel, 下村訳, 五徳]
 const D=/*DATA*/[];
 
 const $=s=>document.querySelector(s);
@@ -143,7 +176,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 let favs=new Set();
 try{favs=new Set(JSON.parse(localStorage.getItem("rongo-fav")||"[]"))}catch(e){}
 const saveFav=()=>{try{localStorage.setItem("rongo-fav",JSON.stringify([...favs]))}catch(e){}};
-const st={tab:"home",scene:null,emo:null,book:0,q:"",open:new Set(),limit:20};
+const st={tab:"home",scene:null,emo:null,toku:null,tf:null,sf:null,book:0,q:"",open:new Set(),limit:20};
 
 const ref=d=>`${BOOKS[d[1]]}第${d[1]+1}・${d[2]}章`;
 function rank(list,scene){
@@ -156,7 +189,7 @@ function rank(list,scene){
 function card(d){
   const open=st.open.has(d[0]),fav=favs.has(d[0]);
   return `<article class="card" data-n="${d[0]}">
-   <div class="meta">${d[9]===3?'<span class="seal">名句</span>':''}<span>${ref(d)}</span></div>
+   <div class="meta">${d[9]===3?'<span class="seal">名句</span>':''}<span>${ref(d)}</span>${(d[11]||[]).map(t=>`<button class="tbadge t-${t}" data-toku="${t}" title="${tk(t)[1]}徳の章を見る">${tk(t)[1]}</button>`).join("")}</div>
    <p class="hito">${esc(d[5])}</p>
    <p class="kaki ${open?'':'clamp'}">${esc(d[4])}</p>
    ${d[6]?`<p class="toi">${esc(d[6])}</p>`:''}
@@ -176,16 +209,18 @@ function listHtml(items){
 }
 function search(q){
   const hitScenes=Object.keys(HINTS).filter(k=>HINTS[k].some(w=>q.includes(w)));
+  const hitTokus=TOKUS.filter(t=>q.includes(t[1]+"徳")).map(t=>t[0]);
   const words=q.split(/[\s　、。]+/).filter(Boolean);
   const scored=[];
   for(const d of D){
     let s=0;const hay=d[5]+d[4]+d[6]+d[10]+d[3];
     for(const w of words) if(hay.includes(w)) s+=4;
     hitScenes.forEach(k=>{const i=d[7].indexOf(k); if(i>=0) s+=3-i});
+    hitTokus.forEach(k=>{const i=(d[11]||[]).indexOf(k); if(i>=0) s+=5-i*2});
     if(s>0) scored.push([s+d[9],d]);
   }
   scored.sort((a,b)=>b[0]-a[0]||a[1][0]-b[1][0]);
-  return {items:scored.map(x=>x[1]),hitScenes};
+  return {items:scored.map(x=>x[1]),hitScenes,hitTokus};
 }
 function today(){
   const top=D.filter(d=>d[9]===3&&d[4].length<90); if(!top.length)return "";
@@ -201,7 +236,7 @@ function render(){
   if(st.q){
     const r=search(st.q);
     h=`<div class="resulthead"><h2>「${esc(st.q)}」で見つかった章　${r.items.length}</h2>
-      ${r.hitScenes.length?`<div class="chips">${r.hitScenes.map(s=>`<button class="chip" data-go="${s}">${SCENES.find(x=>x[0]===s)[1]}</button>`).join("")}</div>`:''}</div>`+listHtml(r.items);
+      ${r.hitScenes.length||r.hitTokus.length?`<div class="chips">${r.hitScenes.map(s=>`<button class="chip" data-go="${s}">${SCENES.find(x=>x[0]===s)[1]}</button>`).join("")}${r.hitTokus.map(t=>`<button class="chip" data-toku="${t}">${tk(t)[1]}徳</button>`).join("")}</div>`:''}</div>`+listHtml(r.items);
   }else if(st.tab==="home"&&!st.scene){
     h=today()+`<section class="stack" style="gap:12px"><h2>いま、何に悩んでいますか</h2>
       <div class="scenes">${SCENES.map(s=>`<button class="scene" data-go="${s[0]}"><span><b>${s[1]}</b><span class="sub">${s[2]}</span></span><span class="cnt">${D.filter(d=>d[9]>0&&d[7].includes(s[0])).length}章</span></button>`).join("")}</div></section>`;
@@ -209,9 +244,28 @@ function render(){
     const s=SCENES.find(x=>x[0]===st.scene);
     let items=D.filter(d=>d[9]>0&&d[7].includes(st.scene));
     const emos=EMOS.filter(e=>items.some(d=>d[8].includes(e)));
+    const tc={};items.forEach(d=>(d[11]||[]).forEach((t,i)=>tc[t]=(tc[t]||0)+(i?1:2)));
+    const domi=Object.keys(tc).sort((a,b)=>tc[b]-tc[a]).slice(0,2);
     if(st.emo)items=items.filter(d=>d[8].includes(st.emo));
-    h=`<div class="resulthead"><button class="back" data-act="back">← 悩みの一覧へ</button><h2>${s[1]}</h2><p class="lead">${s[2]}。効きそうな順に並べています。</p>
-      <div class="chips">${emos.map(e=>`<button class="chip" data-emo="${e}" aria-pressed="${st.emo===e}">${e}</button>`).join("")}</div></div>`+listHtml(rank(items,st.scene));
+    if(st.tf)items=items.filter(d=>(d[11]||[]).includes(st.tf));
+    h=`<div class="resulthead"><button class="back" data-act="back">← 悩みの一覧へ</button><h2>${s[1]}</h2><p class="lead">${s[2]}。効きそうな順に並べています。${domi.length?`この悩みで多く説かれるのは ${domi.map(t=>`<span class="tbadge t-${t}">${tk(t)[1]}徳</span>`).join(" と ")} です。`:''}</p>
+      <div class="chips"><span class="chiplabel">五徳</span>${TOKUS.map(t=>`<button class="chip" data-tf="${t[0]}" aria-pressed="${st.tf===t[0]}">${t[1]}</button>`).join("")}</div>
+      <div class="chips"><span class="chiplabel">感情</span>${emos.map(e=>`<button class="chip" data-emo="${e}" aria-pressed="${st.emo===e}">${e}</button>`).join("")}</div></div>`+listHtml(rank(items,st.scene));
+  }else if(st.tab==="toku"&&!st.toku){
+    h=`<section class="stack" style="gap:12px"><h2>五徳から引く</h2>
+      <p class="lead">徳とは「生まれたままの素直な心で生きること」。そこに行動があってこそ徳になります。磨きたい徳を選んでください。</p>
+      <div class="tokus">${TOKUS.map((t,i)=>`<button class="toku t-${t[0]} ${i===0?'base':''}" data-toku="${t[0]}"><span class="kanji">${t[1]}</span><span class="gyo">${t[2]}・${t[3]}${i===0?'　すべての徳の土台':''}　${D.filter(d=>(d[11]||[])[0]===t[0]).length}章</span><b>${t[4]}</b><span class="sub">${t[5]}</span></button>`).join("")}</div></section>
+      <section class="chuyo"><h3>中庸であれ</h3><p>仁を欠いた徳は、独り歩きします。</p>
+      <ul><li>仁のない義は「正義のためには手段を選ばず」になる</li><li>仁のない礼は、実のこもらない虚礼になる</li><li>仁のない智は、自分さえ良ければという利己の知恵になる</li><li>仁のない信は、狂信になる</li></ul></section>`;
+  }else if(st.tab==="toku"){
+    const t=tk(st.toku);
+    let items=D.filter(d=>(d[11]||[]).includes(st.toku));
+    const scs=SCENES.filter(s=>items.some(d=>d[9]>0&&d[7].includes(s[0])));
+    if(st.sf)items=items.filter(d=>d[9]>0&&d[7].includes(st.sf));
+    items=items.slice().sort((a,b)=>((b[11][0]===st.toku)-(a[11][0]===st.toku))||(b[9]-a[9])||(a[0]-b[0]));
+    h=`<div class="resulthead"><button class="back" data-act="back">← 五徳の一覧へ</button>
+      <div class="tokuhead t-${t[0]}"><span class="kanji">${t[1]}</span><div><h2>${t[1]}徳　${t[4]}</h2><p class="lead">${t[2]}・${t[3]}。${t[5]}。</p></div></div>
+      <div class="chips"><span class="chiplabel">悩みと掛け合わせる</span>${scs.map(s=>`<button class="chip" data-sf="${s[0]}" aria-pressed="${st.sf===s[0]}">${s[1]}</button>`).join("")}</div></div>`+listHtml(items);
   }else if(st.tab==="all"){
     const items=D.filter(d=>d[1]===st.book);
     h=`<div class="books">${BOOKS.map((b,i)=>`<button class="chip" data-book="${i}" aria-pressed="${st.book===i}">${b}</button>`).join("")}</div>`+listHtml(items);
@@ -222,13 +276,16 @@ function render(){
 }
 document.addEventListener("click",e=>{
   const t=e.target.closest("button"); if(!t)return;
-  if(t.dataset.tab){st.tab=t.dataset.tab;st.scene=null;st.emo=null;st.q="";$("#q").value="";st.limit=20}
-  else if(t.dataset.go){st.tab="home";st.scene=t.dataset.go;st.emo=null;st.q="";$("#q").value="";st.limit=20;window.scrollTo(0,0)}
+  if(t.dataset.tab){st.tab=t.dataset.tab;st.scene=null;st.emo=null;st.toku=null;st.tf=null;st.sf=null;st.q="";$("#q").value="";st.limit=20}
+  else if(t.dataset.toku){st.tab="toku";st.toku=t.dataset.toku;st.sf=null;st.q="";$("#q").value="";st.limit=20;window.scrollTo(0,0)}
+  else if(t.dataset.tf){st.tf=st.tf===t.dataset.tf?null:t.dataset.tf;st.limit=20}
+  else if(t.dataset.sf){st.sf=st.sf===t.dataset.sf?null:t.dataset.sf;st.limit=20}
+  else if(t.dataset.go){st.tab="home";st.scene=t.dataset.go;st.emo=null;st.tf=null;st.q="";$("#q").value="";st.limit=20;window.scrollTo(0,0)}
   else if(t.dataset.emo){st.emo=st.emo===t.dataset.emo?null:t.dataset.emo;st.limit=20}
   else if(t.dataset.book){st.book=+t.dataset.book;st.limit=20}
   else if(t.dataset.jump){const d=D.find(x=>x[0]===+t.dataset.jump);st.tab="all";st.book=d[1];st.limit=999;st.open.add(d[0]);render();
     const el=document.querySelector(`[data-n="${d[0]}"]`);if(el)el.scrollIntoView({block:"start"});return}
-  else if(t.dataset.act==="back"){st.scene=null;st.emo=null}
+  else if(t.dataset.act==="back"){st.scene=null;st.emo=null;st.toku=null;st.tf=null;st.sf=null}
   else if(t.dataset.act==="more"){st.limit+=20}
   else if(t.dataset.act){const n=+t.closest(".card").dataset.n;
     if(t.dataset.act==="open"){st.open.has(n)?st.open.delete(n):st.open.add(n)}

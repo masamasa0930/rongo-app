@@ -17,6 +17,10 @@ EMOS = {"不安", "怒り", "孤独", "迷い", "焦り", "落胆", "慢心", "�
 sh = json.load(open(os.path.join(DATA, "shimomura.json"), encoding="utf-8"))
 gb = json.load(open(os.path.join(DATA, "genbun.json"), encoding="utf-8"))
 tags = {}
+toku = {}
+for f in sorted(glob.glob(os.path.join(DATA, "tout_*.json"))):
+    for o in json.load(open(f, encoding="utf-8")):
+        toku[o["n"]] = [t for t in o.get("toku", []) if t in {"jin", "gi", "rei", "chi", "shin"}][:2]
 for f in sorted(glob.glob(os.path.join(DATA, "out_*.json"))):
     for o in json.load(open(f, encoding="utf-8")):
         tags[o["n"]] = o
@@ -38,7 +42,7 @@ for o in sh:
         rel = 0
     yaku = re.sub(r"[ \t　]+\n", "\n", o["text"]).strip()
     rows.append([o["n"], o["bi"] - 1, o["no"], genbun, t["kaki"].strip(), t["hito"].strip(),
-                 t.get("toi", "").strip() if rel > 0 else "", scenes, emo, rel, yaku])
+                 t.get("toi", "").strip() if rel > 0 else "", scenes, emo, rel, yaku, toku.get(o["n"], [])])
 
 if problems:
     print("\n".join(problems), file=sys.stderr)
