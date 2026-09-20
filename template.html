@@ -1,0 +1,241 @@
+<title>経営者の論語</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ground:#F5F7F6; --surface:#FFFFFF; --ink:#1B2026; --muted:#65707A; --line:#DCE2E1;
+  --ai:#1F3A5F; --ai-soft:#E6ECF3; --on-ai:#FFFFFF; --shu:#B3362C;
+  --mincho:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --gothic:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#11151A; --surface:#1A2028; --ink:#E9ECE8; --muted:#97A1AA; --line:#2C343D;
+    --ai:#9BB9E2; --ai-soft:#222C38; --on-ai:#10151B; --shu:#E5766A;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#11151A; --surface:#1A2028; --ink:#E9ECE8; --muted:#97A1AA; --line:#2C343D;
+  --ai:#9BB9E2; --ai-soft:#222C38; --on-ai:#10151B; --shu:#E5766A;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--gothic);font-size:16px;line-height:1.8;padding-inline:16px;padding-block:20px 64px}
+.wrap{max-width:720px;margin-inline:auto;display:flex;flex-direction:column;gap:24px}
+.stack{display:flex;flex-direction:column;gap:24px;min-width:0}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--ai);outline-offset:2px}
+
+header.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font-family:var(--mincho);font-weight:700;font-size:1.5rem;letter-spacing:.08em}
+.brand small{display:block;font-family:var(--gothic);font-weight:400;font-size:.75rem;color:var(--muted);letter-spacing:.04em}
+nav.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
+nav.tabs button{padding:8px 14px;font-size:.9rem;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+nav.tabs button[aria-selected="true"]{color:var(--ai);border-bottom-color:var(--ai);font-weight:700}
+
+.search{display:flex;gap:8px}
+.search input{flex:1;min-width:0;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+.search input::placeholder{color:var(--muted)}
+
+h2{font-family:var(--mincho);font-weight:700;font-size:1.15rem;margin:0;text-wrap:balance}
+.lead{color:var(--muted);font-size:.85rem;margin:0}
+
+/* 今日の一章：縦書き */
+.today{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.today .label{font-size:.75rem;letter-spacing:.2em;color:var(--muted)}
+.tate{writing-mode:vertical-rl;font-family:var(--mincho);font-size:1.15rem;line-height:2;inline-size:fit-content;max-inline-size:15em;overflow-x:auto;max-width:100%;padding-bottom:6px;align-self:center}
+.today .hito{font-family:var(--mincho);font-weight:700;font-size:1.1rem;margin:0;text-wrap:balance}
+.linkish{color:var(--ai);font-size:.85rem;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
+
+/* 悩みの入口 */
+.scenes{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.scene{display:flex;align-items:baseline;justify-content:space-between;gap:12px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:14px 16px;transition:border-color .15s}
+.scene:hover{border-color:var(--ai)}
+.scene b{font-weight:700;display:block;line-height:1.5}
+.scene span.sub{display:block;font-size:.78rem;color:var(--muted);line-height:1.5}
+.scene .cnt{font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* 結果 */
+.resulthead{display:flex;flex-direction:column;gap:10px}
+.back{color:var(--ai);font-size:.85rem;align-self:flex-start}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:.8rem;padding:3px 12px;border:1px solid var(--line);border-radius:99px;color:var(--muted);background:var(--surface)}
+.chip[aria-pressed="true"]{background:var(--ai);border-color:var(--ai);color:var(--on-ai)}
+.list{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px 18px 14px;display:flex;flex-direction:column;gap:10px}
+.card .meta{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--muted)}
+.seal{font-family:var(--mincho);font-size:.7rem;color:var(--shu);border:1px solid var(--shu);padding:0 5px;border-radius:2px;line-height:1.5}
+.card .hito{font-family:var(--mincho);font-weight:700;font-size:1.12rem;line-height:1.7;margin:0;text-wrap:balance}
+.card .kaki{font-family:var(--mincho);font-size:.95rem;margin:0;color:var(--ink)}
+.card .kaki.clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.toi{border-left:2px solid var(--ai);padding-left:12px;font-size:.9rem;margin:0}
+.toi::before{content:"問い";display:block;font-size:.7rem;color:var(--muted);letter-spacing:.2em}
+.actions{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line);padding-top:8px;font-size:.85rem}
+.actions button{color:var(--ai);padding:4px 2px}
+.fav[aria-pressed="true"]{color:var(--shu);font-weight:700}
+.more{display:flex;flex-direction:column;gap:12px}
+.more h3{font-size:.72rem;letter-spacing:.2em;color:var(--muted);font-weight:500;margin:0 0 2px}
+.more p{margin:0;font-size:.92rem;white-space:pre-wrap}
+.more .gen{font-family:var(--mincho);font-size:1rem;letter-spacing:.05em}
+.empty{color:var(--muted);font-size:.9rem;padding:20px 0}
+.morebtn{align-self:center;color:var(--ai);border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:8px 20px;font-size:.9rem}
+
+.books{display:flex;flex-wrap:wrap;gap:6px}
+footer{border-top:1px solid var(--line);padding-top:16px;font-size:.75rem;color:var(--muted);line-height:1.7}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">経営者の論語<small>いまの悩みから引く、全499章</small></div>
+  </header>
+
+  <div class="search">
+    <input id="q" type="search" placeholder="言葉で探す（例：部下が動かない、後継者、巧言令色）" autocomplete="off">
+  </div>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tab-home" aria-selected="true" data-tab="home">悩みから</button>
+    <button role="tab" id="tab-all" aria-selected="false" data-tab="all">全章</button>
+    <button role="tab" id="tab-fav" aria-selected="false" data-tab="fav">しおり</button>
+  </nav>
+
+  <main id="view" class="stack"></main>
+
+  <footer>
+    現代語訳は下村湖人『現代訳論語』（青空文庫・著作権保護期間満了）、原文はウィキソース『論語』に拠ります。
+    書き下し文・一言訳・問い・悩みの分類は株式会社ロジック・ブレインが作成した参考情報で、学術的な定訳ではありません。
+  </footer>
+</div>
+
+<script>
+const SCENES=[
+ ["lonely","孤独だ・理解されない","誰も分かってくれない、評価されない"],
+ ["lead","人が動かない・ついてこない","指示しても響かない、求心力が落ちた"],
+ ["grow","人を育てたい・任せられない","教え方、伸ばし方、任せどき"],
+ ["judge","人を見抜けない","採用・登用・誰と組むか"],
+ ["trust","人間関係がこじれた","対立、裏切り、批判、言葉の行き違い"],
+ ["vision","志・目標がブレた","何のためにやっているのか"],
+ ["decide","決断できない・迷っている","進むか退くか、やり過ぎか不足か"],
+ ["profit","利益と筋の板挟み","金・地位・名声と、義や信用"],
+ ["fail","失敗した・逆境で折れそう","過ち、不遇、続かない"],
+ ["self","自分を整えたい","怒り、驕り、焦り、言行不一致"]
+];
+const EMOS=["不安","怒り","孤独","迷い","焦り","落胆","慢心","疲れ"];
+const BOOKS=["学而","為政","八佾","里仁","公冶長","雍也","述而","泰伯","子罕","郷党","先進","顔淵","子路","憲問","衛霊公","季氏","陽貨","微子","子張","堯曰"];
+// 言葉から悩みへの手がかり
+const HINTS={
+ lonely:["孤独","ひとり","一人","理解され","分かってくれ","わかってくれ","評価され","認められ","報われ"],
+ lead:["動かない","動いてくれ","ついてこ","言うことを聞","統率","リーダー","求心力","組織","士気","指示"],
+ grow:["育て","育成","任せ","教え","後継","部下","若手","成長","研修","指導"],
+ judge:["採用","登用","抜擢","人選","見抜","面接","見極め","誰と","付き合う","友人"],
+ trust:["人間関係","裏切","対立","批判","悪口","揉め","もめ","こじれ","喧嘩","信頼","陰口","嫌われ"],
+ vision:["志","目標","ブレ","ぶれ","理念","ビジョン","何のため","やる気","学び","初心"],
+ decide:["決断","迷","決められ","撤退","判断","優先","進退","やめるか","辞めるか"],
+ profit:["利益","お金","金","儲","売上","値引","名声","地位","信用","誠実","筋","不正"],
+ fail:["失敗","逆境","挫折","折れ","落ち込","不遇","続かない","諦め","あきらめ","苦し","ミス"],
+ self:["怒","イライラ","いらいら","驕","焦","慢心","感情","反省","言い過ぎ","口だけ","自分を"]
+};
+// [n, 篇index, 篇内番号, 原文, 書き下し, 一言訳, 問い, scenes, emo, rel, 下村訳]
+const D=/*DATA*/[];
+
+const $=s=>document.querySelector(s);
+const view=$("#view");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let favs=new Set();
+try{favs=new Set(JSON.parse(localStorage.getItem("rongo-fav")||"[]"))}catch(e){}
+const saveFav=()=>{try{localStorage.setItem("rongo-fav",JSON.stringify([...favs]))}catch(e){}};
+const st={tab:"home",scene:null,emo:null,book:0,q:"",open:new Set(),limit:20};
+
+const ref=d=>`${BOOKS[d[1]]}第${d[1]+1}・${d[2]}章`;
+function rank(list,scene){
+  return list.slice().sort((a,b)=>{
+    if(scene){const ia=a[7].indexOf(scene),ib=b[7].indexOf(scene);
+      const sa=a[9]*2-(ia<0?9:ia), sb=b[9]*2-(ib<0?9:ib); if(sb!==sa)return sb-sa}
+    else if(b[9]!==a[9])return b[9]-a[9];
+    return a[0]-b[0]});
+}
+function card(d){
+  const open=st.open.has(d[0]),fav=favs.has(d[0]);
+  return `<article class="card" data-n="${d[0]}">
+   <div class="meta">${d[9]===3?'<span class="seal">名句</span>':''}<span>${ref(d)}</span></div>
+   <p class="hito">${esc(d[5])}</p>
+   <p class="kaki ${open?'':'clamp'}">${esc(d[4])}</p>
+   ${d[6]?`<p class="toi">${esc(d[6])}</p>`:''}
+   ${open?`<div class="more">
+     <div><h3>現代語訳（下村湖人）</h3><p>${esc(d[10])}</p></div>
+     ${d[3]?`<div><h3>原文</h3><p class="gen">${esc(d[3])}</p></div>`:''}
+     ${d[7].length?`<div class="chips">${d[7].map(s=>`<button class="chip" data-go="${s}">${SCENES.find(x=>x[0]===s)[1]}</button>`).join("")}</div>`:''}
+   </div>`:''}
+   <div class="actions"><button data-act="open">${open?'閉じる':'現代語訳と原文を読む'}</button>
+   <button class="fav" data-act="fav" aria-pressed="${fav}">${fav?'しおり済み':'しおりを挟む'}</button></div>
+  </article>`;
+}
+function listHtml(items){
+  if(!items.length)return `<p class="empty">当てはまる章がありません。言葉を変えるか、悩みの入口から探してください。</p>`;
+  const shown=items.slice(0,st.limit);
+  return `<div class="list">${shown.map(card).join("")}</div>`+(items.length>st.limit?`<button class="morebtn" data-act="more">続きを見る（残り${items.length-st.limit}章）</button>`:'');
+}
+function search(q){
+  const hitScenes=Object.keys(HINTS).filter(k=>HINTS[k].some(w=>q.includes(w)));
+  const words=q.split(/[\s　、。]+/).filter(Boolean);
+  const scored=[];
+  for(const d of D){
+    let s=0;const hay=d[5]+d[4]+d[6]+d[10]+d[3];
+    for(const w of words) if(hay.includes(w)) s+=4;
+    hitScenes.forEach(k=>{const i=d[7].indexOf(k); if(i>=0) s+=3-i});
+    if(s>0) scored.push([s+d[9],d]);
+  }
+  scored.sort((a,b)=>b[0]-a[0]||a[1][0]-b[1][0]);
+  return {items:scored.map(x=>x[1]),hitScenes};
+}
+function today(){
+  const top=D.filter(d=>d[9]===3&&d[4].length<90); if(!top.length)return "";
+  const now=new Date(),k=now.getFullYear()*372+now.getMonth()*31+now.getDate();
+  const d=top[k%top.length];
+  return `<section class="today"><span class="label">今日の一章　${ref(d)}</span>
+    <div class="tate">${esc(d[4])}</div><p class="hito">${esc(d[5])}</p>
+    <button class="linkish" data-jump="${d[0]}">この章を読む</button></section>`;
+}
+function render(){
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===st.tab));
+  let h="";
+  if(st.q){
+    const r=search(st.q);
+    h=`<div class="resulthead"><h2>「${esc(st.q)}」で見つかった章　${r.items.length}</h2>
+      ${r.hitScenes.length?`<div class="chips">${r.hitScenes.map(s=>`<button class="chip" data-go="${s}">${SCENES.find(x=>x[0]===s)[1]}</button>`).join("")}</div>`:''}</div>`+listHtml(r.items);
+  }else if(st.tab==="home"&&!st.scene){
+    h=today()+`<section class="stack" style="gap:12px"><h2>いま、何に悩んでいますか</h2>
+      <div class="scenes">${SCENES.map(s=>`<button class="scene" data-go="${s[0]}"><span><b>${s[1]}</b><span class="sub">${s[2]}</span></span><span class="cnt">${D.filter(d=>d[9]>0&&d[7].includes(s[0])).length}章</span></button>`).join("")}</div></section>`;
+  }else if(st.tab==="home"){
+    const s=SCENES.find(x=>x[0]===st.scene);
+    let items=D.filter(d=>d[9]>0&&d[7].includes(st.scene));
+    const emos=EMOS.filter(e=>items.some(d=>d[8].includes(e)));
+    if(st.emo)items=items.filter(d=>d[8].includes(st.emo));
+    h=`<div class="resulthead"><button class="back" data-act="back">← 悩みの一覧へ</button><h2>${s[1]}</h2><p class="lead">${s[2]}。効きそうな順に並べています。</p>
+      <div class="chips">${emos.map(e=>`<button class="chip" data-emo="${e}" aria-pressed="${st.emo===e}">${e}</button>`).join("")}</div></div>`+listHtml(rank(items,st.scene));
+  }else if(st.tab==="all"){
+    const items=D.filter(d=>d[1]===st.book);
+    h=`<div class="books">${BOOKS.map((b,i)=>`<button class="chip" data-book="${i}" aria-pressed="${st.book===i}">${b}</button>`).join("")}</div>`+listHtml(items);
+  }else{
+    h=`<h2>しおりを挟んだ章</h2><p class="lead">しおりはこの端末のブラウザに保存されます。</p>`+listHtml(D.filter(d=>favs.has(d[0])));
+  }
+  view.innerHTML=h;
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("button"); if(!t)return;
+  if(t.dataset.tab){st.tab=t.dataset.tab;st.scene=null;st.emo=null;st.q="";$("#q").value="";st.limit=20}
+  else if(t.dataset.go){st.tab="home";st.scene=t.dataset.go;st.emo=null;st.q="";$("#q").value="";st.limit=20;window.scrollTo(0,0)}
+  else if(t.dataset.emo){st.emo=st.emo===t.dataset.emo?null:t.dataset.emo;st.limit=20}
+  else if(t.dataset.book){st.book=+t.dataset.book;st.limit=20}
+  else if(t.dataset.jump){const d=D.find(x=>x[0]===+t.dataset.jump);st.tab="all";st.book=d[1];st.limit=999;st.open.add(d[0]);render();
+    const el=document.querySelector(`[data-n="${d[0]}"]`);if(el)el.scrollIntoView({block:"start"});return}
+  else if(t.dataset.act==="back"){st.scene=null;st.emo=null}
+  else if(t.dataset.act==="more"){st.limit+=20}
+  else if(t.dataset.act){const n=+t.closest(".card").dataset.n;
+    if(t.dataset.act==="open"){st.open.has(n)?st.open.delete(n):st.open.add(n)}
+    else{favs.has(n)?favs.delete(n):favs.add(n);saveFav()}}
+  else return;
+  render();
+});
+let timer;$("#q").addEventListener("input",e=>{clearTimeout(timer);timer=setTimeout(()=>{st.q=e.target.value.trim();st.limit=20;render()},200)});
+render();
+</script>
