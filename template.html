@@ -2,133 +2,179 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
 <style>
 :root{
-  --ground:#F5F7F6; --surface:#FFFFFF; --ink:#1B2026; --muted:#65707A; --line:#DCE2E1;
-  --ai:#1F3A5F; --ai-soft:#E6ECF3; --on-ai:#FFFFFF; --shu:#B3362C;
-  --moku:#2C6A58; --ka:#B3362C; --do:#94701C; --gon:#737A83; --sui:#1B2026;
+  --ground:#F6F7F5; --surface:#FFFFFF; --ink:#1A1E23; --muted:#5E6870; --line:#D9DEDC;
+  --ai:#1F3A5F; --shu:#B3362C; --on-ink:#FFFFFF;
+  --moku:#2C6A58; --ka:#B3362C; --do:#94701C; --gon:#5F6770; --sui:#1F3A5F;
   --mincho:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
   --gothic:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --ground:#11151A; --surface:#1A2028; --ink:#E9ECE8; --muted:#97A1AA; --line:#2C343D;
-    --ai:#9BB9E2; --ai-soft:#222C38; --on-ai:#10151B; --shu:#E5766A;
-    --moku:#7FC2A8; --ka:#E5766A; --do:#D6B25E; --gon:#B4BAC2; --sui:#E9ECE8;
+    --ground:#12161B; --surface:#1A2027; --ink:#E8EBE6; --muted:#98A2AB; --line:#2C353F;
+    --ai:#9DB8DE; --shu:#E5766A; --on-ink:#12161B;
+    --moku:#7DC0A5; --ka:#E5766A; --do:#D5B25E; --gon:#B5BCC4; --sui:#8FB0DC;
   }
 }
 :root[data-theme="dark"]{
-  --ground:#11151A; --surface:#1A2028; --ink:#E9ECE8; --muted:#97A1AA; --line:#2C343D;
-  --ai:#9BB9E2; --ai-soft:#222C38; --on-ai:#10151B; --shu:#E5766A;
-    --moku:#7FC2A8; --ka:#E5766A; --do:#D6B25E; --gon:#B4BAC2; --sui:#E9ECE8;
+  --ground:#12161B; --surface:#1A2027; --ink:#E8EBE6; --muted:#98A2AB; --line:#2C353F;
+  --ai:#9DB8DE; --shu:#E5766A; --on-ink:#12161B;
+  --moku:#7DC0A5; --ka:#E5766A; --do:#D5B25E; --gon:#B5BCC4; --sui:#8FB0DC;
 }
 *{box-sizing:border-box}
-body{background:var(--ground);color:var(--ink);font-family:var(--gothic);font-size:16px;line-height:1.8;padding-inline:16px;padding-block:20px 64px}
-.wrap{max-width:720px;margin-inline:auto;display:flex;flex-direction:column;gap:24px}
-.stack{display:flex;flex-direction:column;gap:24px;min-width:0}
-button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+body{background:var(--ground);color:var(--ink);font-family:var(--gothic);font-size:15px;line-height:1.8;padding-inline:20px;padding-block:20px calc(88px + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:560px;margin-inline:auto;display:flex;flex-direction:column;gap:20px}
+.stack{display:flex;flex-direction:column;gap:20px;min-width:0}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0;text-align:inherit}
 button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--ai);outline-offset:2px}
+p{margin:0}
+.mincho{font-family:var(--mincho)}
+.muted{color:var(--muted)}
+.t-jin{--tc:var(--moku)}.t-gi{--tc:var(--gon)}.t-rei{--tc:var(--ka)}.t-chi{--tc:var(--sui)}.t-shin{--tc:var(--do)}
 
-header.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.brand{font-family:var(--mincho);font-weight:700;font-size:1.5rem;letter-spacing:.08em}
-.brand small{display:block;font-family:var(--gothic);font-weight:400;font-size:.75rem;color:var(--muted);letter-spacing:.04em}
-nav.tabs{display:flex;gap:4px;overflow-x:auto;white-space:nowrap;border-bottom:1px solid var(--line)}
-nav.tabs button{padding:8px 12px;font-size:.9rem;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
-nav.tabs button[aria-selected="true"]{color:var(--ai);border-bottom-color:var(--ai);font-weight:700}
+header.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.brand{font-family:var(--mincho);font-weight:700;font-size:1.1rem;letter-spacing:.12em}
+.date{font-size:.72rem;color:var(--muted);letter-spacing:.08em}
+.link{color:var(--ai);font-size:.85rem;min-height:44px;display:inline-flex;align-items:center;align-self:flex-start}
+.seal{font-family:var(--mincho);font-size:.7rem;color:var(--shu);border:1px solid var(--shu);padding:0 6px;line-height:1.6;letter-spacing:.08em;white-space:nowrap}
+.tmark{font-family:var(--mincho);font-weight:700;color:var(--tc);border-bottom:1px solid var(--tc);line-height:1.3;font-size:.9rem;padding:0 1px}
+h2{font-family:var(--mincho);font-weight:700;font-size:1rem;margin:0;letter-spacing:.06em;text-wrap:balance}
+.lbl{font-size:.7rem;color:var(--muted);letter-spacing:.25em}
 
-.search{display:flex;gap:8px}
-.search input{flex:1;min-width:0;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+/* 五徳の環 */
+.ring{position:relative;width:100%;max-width:390px;aspect-ratio:390/300;align-self:center}
+.ring svg{position:absolute;inset:0;width:100%;height:100%}
+.node{position:absolute;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;border:1.5px solid var(--tc);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--tc);text-align:center;transition:background .15s,color .15s}
+.node:hover{background:var(--tc);color:var(--surface)}
+.node:hover small{color:var(--surface)}
+.node b{font-family:var(--mincho);font-size:30px;line-height:1.05}
+.node small{font-size:9px;color:var(--muted);letter-spacing:.04em;line-height:1.4}
+.ring .center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;display:flex;flex-direction:column;gap:2px;pointer-events:none}
+.ring .center b{font-family:var(--mincho);font-size:13px;color:var(--moku)}
+.ring .center small{font-size:10px;color:var(--muted)}
+
+/* 今朝の一章 */
+.today{background:var(--surface);border:1px solid var(--line);padding:18px;display:flex;flex-direction:column;gap:12px}
+.today .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.week{display:flex;gap:4px}
+.week span{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--muted)}
+.week span.on{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.today .body{display:flex;gap:14px;color:var(--ink);text-decoration:none}
+.today .body .hito{flex:1;font-family:var(--mincho);font-weight:700;font-size:1.05rem;line-height:1.7;text-wrap:pretty}
+.today .body .tate{writing-mode:vertical-rl;font-family:var(--mincho);font-size:15px;line-height:1.8;max-height:130px;color:var(--muted)}
+.today .ref{font-size:.72rem;color:var(--muted)}
+
+/* 問いに答える */
+.ask{display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px solid var(--line)}
+.ask label{font-size:.95rem;line-height:1.75}
+.ask .row{display:flex;gap:8px}
+.ask input{flex:1;min-width:0;height:44px;padding:0 12px;border:1px solid var(--line);border-radius:2px;background:var(--ground);font:inherit;font-size:.9rem;color:var(--ink)}
+.ask input::placeholder{color:var(--muted)}
+.btn-ink{height:44px;padding:0 18px;border-radius:2px;background:var(--ink);color:var(--on-ink);font-weight:700;font-size:.9rem;white-space:nowrap}
+.done{font-size:.92rem;line-height:1.7}
+.done .when{font-size:.72rem;color:var(--muted);margin-right:8px;font-variant-numeric:tabular-nums}
+.redo{color:var(--ai);font-size:.8rem;margin-left:6px}
+.past{display:flex;flex-direction:column;gap:4px;font-size:.85rem;line-height:1.6}
+.past div{display:flex;gap:10px}
+.past span:first-child{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* 行リスト */
+.rows{display:flex;flex-direction:column}
+.rowlink{display:flex;flex-direction:column;gap:5px;padding:14px 0;border-bottom:1px solid var(--line);width:100%;color:var(--ink)}
+.rowlink .meta{display:flex;align-items:center;gap:8px;font-size:.72rem;color:var(--muted);flex-wrap:wrap}
+.rowlink .hito{font-family:var(--mincho);font-weight:700;font-size:1rem;line-height:1.65;text-wrap:pretty}
+.rowlink .kaki{font-family:var(--mincho);font-size:.82rem;line-height:1.7;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rowlink:hover .hito{color:var(--ai)}
+.scene{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:8px 0;border-bottom:1px solid var(--line);width:100%}
+.scene b{font-weight:500;display:block;line-height:1.5}
+.scene small{display:block;font-size:.75rem;color:var(--muted);line-height:1.5}
+.scene .cnt{font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.more{align-self:center;color:var(--ai);border:1px solid var(--line);background:var(--surface);padding:10px 22px;font-size:.85rem}
+.empty{color:var(--muted);font-size:.9rem;padding:16px 0}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{font-size:.78rem;min-height:34px;padding:0 12px;border:1px solid var(--line);border-radius:17px;background:var(--surface);color:var(--ink);display:inline-flex;align-items:center}
+.chip[aria-pressed="true"]{background:var(--tc,var(--ink));border-color:var(--tc,var(--ink));color:var(--on-ink);font-weight:700}
+.chiplabel{font-size:.7rem;color:var(--muted);letter-spacing:.12em;margin-right:2px}
+
+.search{display:flex;align-items:center;gap:10px;height:48px;padding:0 14px;background:var(--surface);border:1px solid var(--line);border-radius:2px}
+.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:.9rem;color:var(--ink)}
 .search input::placeholder{color:var(--muted)}
 
-h2{font-family:var(--mincho);font-weight:700;font-size:1.15rem;margin:0;text-wrap:balance}
-.lead{color:var(--muted);font-size:.85rem;margin:0}
+/* 徳の見出し */
+.tokuhead{display:flex;gap:16px;align-items:center}
+.tokuhead .big{font-family:var(--mincho);font-weight:700;font-size:56px;line-height:1;color:var(--tc)}
+.tokuhead b{font-family:var(--mincho);font-size:1.05rem;display:block}
+.tokuhead small{font-size:.78rem;color:var(--muted);line-height:1.6;display:block}
+.note{padding:12px 14px;background:var(--surface);border:1px solid var(--line);font-size:.8rem;line-height:1.7;color:var(--muted)}
+.note b{font-family:var(--mincho);color:var(--moku)}
 
-/* 今日の一章：縦書き */
-.today{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:20px;display:flex;flex-direction:column;gap:12px}
-.today .label{font-size:.75rem;letter-spacing:.2em;color:var(--muted)}
-.tate{writing-mode:vertical-rl;font-family:var(--mincho);font-size:1.15rem;line-height:2;inline-size:fit-content;max-inline-size:15em;overflow-x:auto;max-width:100%;padding-bottom:6px;align-self:center}
-.today .hito{font-family:var(--mincho);font-weight:700;font-size:1.1rem;margin:0;text-wrap:balance}
-.linkish{color:var(--ai);font-size:.85rem;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
+/* 章を読む */
+.chhead{display:flex;align-items:center;justify-content:space-between}
+.bm{width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+.bm path{stroke:var(--shu);fill:transparent}
+.bm[aria-pressed="true"] path{fill:var(--shu)}
+.lead-side{display:flex;gap:18px;align-items:stretch}
+.lead-side .l{flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:16px;min-width:0}
+.lead-side .tate{writing-mode:vertical-rl;font-family:var(--mincho);font-size:24px;line-height:1.9;letter-spacing:.08em;max-height:250px}
+.metaline{display:flex;flex-direction:column;gap:6px}
+.metaline .ref{font-size:.75rem;color:var(--muted);letter-spacing:.1em}
+.metaline .marks{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ch-hito{font-family:var(--mincho);font-weight:700;font-size:1.08rem;line-height:1.75;text-wrap:pretty}
+.tate-full{writing-mode:vertical-rl;font-family:var(--mincho);font-size:21px;line-height:1.95;letter-spacing:.05em;max-height:280px;overflow-x:auto;max-width:100%;align-self:flex-end;padding-bottom:6px}
+.yoko{font-family:var(--mincho);font-size:1.02rem;line-height:1.95}
+.qbox{display:flex;flex-direction:column;gap:10px;padding:16px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.qbox .ask{border-top:0;padding-top:0}
+.qbox .ask input{background:var(--surface)}
+.seg{display:flex;gap:20px;font-size:.85rem}
+.seg button{padding-bottom:4px;color:var(--muted);border-bottom:2px solid transparent;min-height:36px}
+.seg button[aria-pressed="true"]{color:var(--ink);font-weight:700;border-bottom-color:var(--ink)}
+.text{font-size:.9rem;line-height:1.95;white-space:pre-wrap}
+.gen{font-family:var(--mincho);font-size:1rem;letter-spacing:.05em;line-height:1.9}
+.src{font-size:.72rem;color:var(--muted)}
+.pager{display:flex;border-top:1px solid var(--line);margin-inline:-20px}
+.pager button{flex:1;min-height:52px;padding:0 20px;font-size:.85rem;color:var(--muted)}
+.pager button:last-child{text-align:right;color:var(--ink);font-weight:700}
+.pager button:disabled{opacity:.35;cursor:default}
 
-/* 悩みの入口 */
-.scenes{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
-.scene{display:flex;align-items:baseline;justify-content:space-between;gap:12px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:14px 16px;transition:border-color .15s}
-.scene:hover{border-color:var(--ai)}
-.scene b{font-weight:700;display:block;line-height:1.5}
-.scene span.sub{display:block;font-size:.78rem;color:var(--muted);line-height:1.5}
-.scene .cnt{font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* 記録 */
+.panel{background:var(--surface);border:1px solid var(--line);padding:18px;display:flex;flex-direction:column;gap:12px}
+.bars{display:flex;align-items:flex-end;gap:16px;height:130px}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.bar i{display:block;width:100%;background:var(--tc);min-height:2px}
+.bar span{font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar b{font-family:var(--mincho);font-size:1rem;color:var(--tc)}
+.logrow{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);width:100%}
+.logrow .d{width:40px;font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums;flex:none}
+.logrow .c{display:flex;flex-direction:column;gap:2px;min-width:0}
+.logrow .c small{font-size:.72rem;color:var(--muted)}
+.logrow .c span{font-size:.9rem;line-height:1.6}
 
-/* 結果 */
-.resulthead{display:flex;flex-direction:column;gap:10px}
-.back{color:var(--ai);font-size:.85rem;align-self:flex-start}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{font-size:.8rem;padding:3px 12px;border:1px solid var(--line);border-radius:99px;color:var(--muted);background:var(--surface)}
-.chip[aria-pressed="true"]{background:var(--ai);border-color:var(--ai);color:var(--on-ai)}
-.list{display:flex;flex-direction:column;gap:12px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px 18px 14px;display:flex;flex-direction:column;gap:10px}
-.card .meta{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--muted)}
-.seal{font-family:var(--mincho);font-size:.7rem;color:var(--shu);border:1px solid var(--shu);padding:0 5px;border-radius:2px;line-height:1.5}
-.card .hito{font-family:var(--mincho);font-weight:700;font-size:1.12rem;line-height:1.7;margin:0;text-wrap:balance}
-.card .kaki{font-family:var(--mincho);font-size:.95rem;margin:0;color:var(--ink)}
-.card .kaki.clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.toi{border-left:2px solid var(--ai);padding-left:12px;font-size:.9rem;margin:0}
-.toi::before{content:"問い";display:block;font-size:.7rem;color:var(--muted);letter-spacing:.2em}
-.actions{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line);padding-top:8px;font-size:.85rem}
-.actions button{color:var(--ai);padding:4px 2px}
-.fav[aria-pressed="true"]{color:var(--shu);font-weight:700}
-.more{display:flex;flex-direction:column;gap:12px}
-.more h3{font-size:.72rem;letter-spacing:.2em;color:var(--muted);font-weight:500;margin:0 0 2px}
-.more p{margin:0;font-size:.92rem;white-space:pre-wrap}
-.more .gen{font-family:var(--mincho);font-size:1rem;letter-spacing:.05em}
-.empty{color:var(--muted);font-size:.9rem;padding:20px 0}
-.morebtn{align-self:center;color:var(--ai);border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:8px 20px;font-size:.9rem}
-
-/* 五徳 */
-.tokus{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
-.toku{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:start;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:14px 16px;transition:border-color .15s}
-.toku:hover{border-color:var(--tc)}
-.toku .kanji{font-family:var(--mincho);font-weight:700;font-size:2.4rem;line-height:1.1;color:var(--tc);grid-row:span 3}
-.toku .gyo{font-size:.72rem;color:var(--muted);letter-spacing:.08em}
-.toku b{font-family:var(--mincho);font-size:.98rem;line-height:1.5}
-.toku .sub{font-size:.78rem;color:var(--muted);line-height:1.5}
-.toku.base{grid-column:1/-1}
-.tokuhead{display:grid;grid-template-columns:auto 1fr;column-gap:16px;align-items:center}
-.tokuhead .kanji{font-family:var(--mincho);font-weight:700;font-size:3.2rem;line-height:1;color:var(--tc)}
-.tokuhead h2{font-size:1.05rem}
-.tbadge{font-family:var(--mincho);font-weight:700;color:var(--tc);border-bottom:1px solid var(--tc);line-height:1.3;padding:0 1px}
-.chiplabel{font-size:.72rem;color:var(--muted);letter-spacing:.12em;align-self:center;margin-right:2px}
-.chuyo{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:6px;font-size:.85rem}
-.chuyo h3{font-family:var(--mincho);font-size:1rem;margin:0}
-.chuyo p{margin:0;color:var(--muted)}
-.chuyo ul{margin:0;padding-left:1.2em}
-.t-jin{--tc:var(--moku)}.t-gi{--tc:var(--gon)}.t-rei{--tc:var(--ka)}.t-chi{--tc:var(--sui)}.t-shin{--tc:var(--do)}
-.books{display:flex;flex-wrap:wrap;gap:6px}
-footer{border-top:1px solid var(--line);padding-top:16px;font-size:.75rem;color:var(--muted);line-height:1.7}
+/* 下タブ */
+nav.tabbar{position:fixed;left:0;right:0;bottom:0;background:var(--ground);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav.tabbar .in{max-width:560px;margin-inline:auto;display:flex}
+nav.tabbar button{flex:1;min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:.68rem;color:var(--muted);text-align:center}
+nav.tabbar button b{font-family:var(--mincho);font-size:18px;line-height:1;font-weight:500}
+nav.tabbar button[aria-current="page"]{color:var(--ink);font-weight:700}
+nav.tabbar button[aria-current="page"] b{font-weight:700}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.7rem;color:var(--muted);line-height:1.7}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
 <div class="wrap">
-  <header class="top">
-    <div class="brand">経営者の論語<small>いまの悩みと五徳から引く、全499章</small></div>
-  </header>
-
-  <div class="search">
-    <input id="q" type="search" placeholder="言葉で探す（例：部下が動かない、後継者、義徳）" autocomplete="off">
-  </div>
-
-  <nav class="tabs" role="tablist">
-    <button role="tab" id="tab-home" aria-selected="true" data-tab="home">悩みから</button>
-    <button role="tab" id="tab-toku" aria-selected="false" data-tab="toku">五徳から</button>
-    <button role="tab" id="tab-all" aria-selected="false" data-tab="all">全章</button>
-    <button role="tab" id="tab-fav" aria-selected="false" data-tab="fav">しおり</button>
-  </nav>
-
   <main id="view" class="stack"></main>
-
   <footer>
     現代語訳は下村湖人『現代訳論語』（青空文庫・著作権保護期間満了）、原文はウィキソース『論語』に拠ります。
     五徳（仁・義・礼・智・信）の考え方は服部真人の研修体系に基づきます。
     書き下し文・一言訳・問い・悩みと五徳の分類は服部真人が作成した参考情報で、学術的な定訳ではありません。
+    答えとしおりは、この端末のブラウザにだけ保存されます。
   </footer>
 </div>
+<nav class="tabbar" aria-label="メニュー"><div class="in">
+  <button data-tab="home"><b>環</b>五徳</button>
+  <button data-tab="scenes"><b>悩</b>悩み</button>
+  <button data-tab="all"><b>篇</b>全章</button>
+  <button data-tab="record"><b>録</b>記録</button>
+</div></nav>
 
 <script>
 const SCENES=[
@@ -143,18 +189,18 @@ const SCENES=[
  ["fail","失敗した・逆境で折れそう","過ち、不遇、続かない"],
  ["self","自分を整えたい","怒り、驕り、焦り、言行不一致"]
 ];
-// [id, 徳, 五行, 本能, 標語, 説明]
+// [id, 徳, 五行, 本能, 標語, 説明, 仁を欠いたときの戒め, 環での座標(390x300)]
 const TOKUS=[
- ["jin","仁","木","守備本能","人を思いやることに素直にあれ","相手の立場に立ち、よく聞く。すべての徳の土台"],
- ["gi","義","金","攻撃本能","正義を貫くに素直にあれ","筋道と道理のある行動。逆境で折れない勇気と決断"],
- ["rei","礼","火","伝達本能","礼を尽くすに素直にあれ","仁を形にして伝える。礼儀、節度、自分を律する所作"],
- ["chi","智","水","習得本能","知恵を磨くに素直にあれ","学び、聞き、偏らずに物事と人を正しく判断する"],
- ["shin","信","土","魅力本能","人を信じるに素直にあれ","心と言葉と行いの一致。四徳が整えば自ずとついてくる"]
+ ["jin","仁","木","守備本能","人を思いやることに素直にあれ","相手の立場に立ち、よく聞く。すべての徳の土台。","",[88,115]],
+ ["rei","礼","火","伝達本能","礼を尽くすに素直にあれ","仁を形にして伝える。礼儀、節度、自分を律する所作。","仁のない礼は、実のこもらない虚礼になる。",[195,38]],
+ ["shin","信","土","魅力本能","人を信じるに素直にあれ","心と言葉と行いの一致。四徳が整えば自ずとついてくる。","仁のない信は、狂信になる。",[302,115]],
+ ["gi","義","金","攻撃本能","正義を貫くに素直にあれ","筋道と道理のある行動。逆境で折れない勇気と決断。","仁のない義は「正義のためには手段を選ばず」になる。",[261,241]],
+ ["chi","智","水","習得本能","知恵を磨くに素直にあれ","学び、聞き、偏らずに物事と人を正しく判断する。","仁のない智は、自分さえ良ければという利己の知恵になる。",[129,241]]
 ];
 const tk=id=>TOKUS.find(t=>t[0]===id);
 const EMOS=["不安","怒り","孤独","迷い","焦り","落胆","慢心","疲れ"];
 const BOOKS=["学而","為政","八佾","里仁","公冶長","雍也","述而","泰伯","子罕","郷党","先進","顔淵","子路","憲問","衛霊公","季氏","陽貨","微子","子張","堯曰"];
-// 言葉から悩みへの手がかり
+const KANSU=["〇","一","二","三","四","五","六","七","八","九"];
 const HINTS={
  lonely:["孤独","ひとり","一人","理解され","分かってくれ","わかってくれ","評価され","認められ","報われ"],
  lead:["動かない","動いてくれ","ついてこ","言うことを聞","統率","リーダー","求心力","組織","士気","指示"],
@@ -169,43 +215,86 @@ const HINTS={
 };
 // [n, 篇index, 篇内番号, 原文, 書き下し, 一言訳, 問い, scenes, emo, rel, 下村訳, 五徳]
 const D=/*DATA*/[];
+const byN=n=>D[n-1];
 
+/* ---------- 保存（この端末のみ） ---------- */
+const KEY="rongo-v2";
+let store={answers:{},fav:[],today:null};
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null"); if(s) store=Object.assign(store,s);
+  else{const old=JSON.parse(localStorage.getItem("rongo-fav")||"[]"); if(old.length) store.fav=old}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}};
+const favs=()=>new Set(store.fav);
+
+/* ---------- 日付 ---------- */
+const pad=n=>String(n).padStart(2,"0");
+const dkey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const today=dkey(new Date());
+const WD="日月火水木金土";
+const kanDate=d=>{const k=n=>n<10?KANSU[n]:n<20?"十"+(n%10?KANSU[n%10]:""):KANSU[Math.floor(n/10)]+"十"+(n%10?KANSU[n%10]:"");return `${k(d.getMonth()+1)}月${k(d.getDate())}日　${WD[d.getDay()]}曜`};
+const md=s=>{const [,m,d]=s.split("-");return `${+m}/${+d}`};
+
+/* ---------- 答え ---------- */
+function allAnswers(){const a=[];for(const n in store.answers)for(const x of store.answers[n])a.push({n:+n,...x});return a.sort((p,q)=>q.d<p.d?-1:q.d>p.d?1:0)}
+function answerDays(){return new Set(allAnswers().map(a=>a.d))}
+function streak(){const days=answerDays();let c=0;const d=new Date();if(!days.has(dkey(d)))d.setDate(d.getDate()-1);
+  while(days.has(dkey(d))){c++;d.setDate(d.getDate()-1)}return c}
+function tokuCounts(days=30){const since=new Date();since.setDate(since.getDate()-days);const s=dkey(since);const c={jin:0,gi:0,rei:0,chi:0,shin:0};
+  for(const a of allAnswers()){if(a.d<s)continue;const t=(byN(a.n)[11]||[])[0];if(t)c[t]++}return c}
+function addAnswer(n,text){text=text.trim();if(!text)return;const arr=store.answers[n]||(store.answers[n]=[]);
+  const i=arr.findIndex(x=>x.d===today);if(i>=0)arr[i].t=text;else arr.push({d:today,t:text});save()}
+
+/* ---------- 今朝の一章 ---------- */
+function hash(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function pickToday(){
+  if(store.today&&store.today.d===today&&byN(store.today.n))return byN(store.today.n);
+  const answered=new Set(Object.keys(store.answers).map(Number));
+  let pool=D.filter(d=>d[9]===3&&!answered.has(d[0]));
+  const c=tokuCounts(),total=Object.values(c).reduce((a,b)=>a+b,0);
+  if(total>=5){const least=Object.keys(c).sort((a,b)=>c[a]-c[b])[0];
+    const p2=D.filter(d=>d[9]>=2&&d[11][0]===least&&!answered.has(d[0]));if(p2.length)pool=p2}
+  if(!pool.length)pool=D.filter(d=>d[9]===3);
+  const d=pool[hash(today)%pool.length];store.today={d:today,n:d[0]};save();return d;
+}
+
+/* ---------- 表示の部品 ---------- */
 const $=s=>document.querySelector(s);
 const view=$("#view");
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-let favs=new Set();
-try{favs=new Set(JSON.parse(localStorage.getItem("rongo-fav")||"[]"))}catch(e){}
-const saveFav=()=>{try{localStorage.setItem("rongo-fav",JSON.stringify([...favs]))}catch(e){}};
-const st={tab:"home",scene:null,emo:null,toku:null,tf:null,sf:null,book:0,q:"",open:new Set(),limit:20};
-
 const ref=d=>`${BOOKS[d[1]]}第${d[1]+1}・${d[2]}章`;
+const tmarks=d=>(d[11]||[]).map(t=>`<span class="tmark t-${t}">${tk(t)[1]}徳</span>`).join("");
+const seal=d=>d[9]===3?'<span class="seal">名句</span>':'';
+const qtext=d=>d[6]||"この章から、今日の自分に持ち帰ることは何か。";
+
+function weekDots(){const days=answerDays();let h="";const d=new Date();d.setDate(d.getDate()-6);
+  for(let i=0;i<7;i++){h+=`<span class="${days.has(dkey(d))?"on":""}" title="${md(dkey(d))}">${WD[d.getDay()]}</span>`;d.setDate(d.getDate()+1)}
+  return `<div class="week" aria-label="この7日間に答えた日">${h}</div>`}
+
+function askBlock(d,id){
+  const mine=(store.answers[d[0]]||[]).find(x=>x.d===today);
+  const editing=st.editing===d[0];
+  if(mine&&!editing) return `<div class="ask"><label>${esc(qtext(d))}</label>
+    <p class="done"><span class="when">今日</span>${esc(mine.t)}<button class="redo" data-act="redo" data-n="${d[0]}">書き直す</button></p></div>`;
+  return `<div class="ask"><label for="${id}">${esc(qtext(d))}</label>
+    <form class="row" data-form="${d[0]}"><input id="${id}" type="text" maxlength="200" placeholder="一行で答える" value="${mine?esc(mine.t):""}" autocomplete="off"><button class="btn-ink" type="submit">記す</button></form></div>`;
+}
+
+function rowItem(d,ctx){
+  return `<button class="rowlink" data-open="${d[0]}" data-ctx="${ctx}">
+    <span class="meta">${seal(d)}<span>${ref(d)}</span>${tmarks(d)}</span>
+    <span class="hito">${esc(d[5])}</span><span class="kaki">${esc(d[4])}</span></button>`}
+function rowsHtml(items,ctxName){
+  st.ctxs[ctxName]=items.map(d=>d[0]);
+  if(!items.length)return `<p class="empty">当てはまる章がありません。</p>`;
+  const lim=st.limit;
+  return `<div class="rows">${items.slice(0,lim).map(d=>rowItem(d,ctxName)).join("")}</div>`+
+    (items.length>lim?`<button class="more" data-act="more">続きを見る（残り${items.length-lim}章）</button>`:"")}
+
 function rank(list,scene){
   return list.slice().sort((a,b)=>{
     if(scene){const ia=a[7].indexOf(scene),ib=b[7].indexOf(scene);
       const sa=a[9]*2-(ia<0?9:ia), sb=b[9]*2-(ib<0?9:ib); if(sb!==sa)return sb-sa}
     else if(b[9]!==a[9])return b[9]-a[9];
     return a[0]-b[0]});
-}
-function card(d){
-  const open=st.open.has(d[0]),fav=favs.has(d[0]);
-  return `<article class="card" data-n="${d[0]}">
-   <div class="meta">${d[9]===3?'<span class="seal">名句</span>':''}<span>${ref(d)}</span>${(d[11]||[]).map(t=>`<button class="tbadge t-${t}" data-toku="${t}" title="${tk(t)[1]}徳の章を見る">${tk(t)[1]}</button>`).join("")}</div>
-   <p class="hito">${esc(d[5])}</p>
-   <p class="kaki ${open?'':'clamp'}">${esc(d[4])}</p>
-   ${d[6]?`<p class="toi">${esc(d[6])}</p>`:''}
-   ${open?`<div class="more">
-     <div><h3>現代語訳（下村湖人）</h3><p>${esc(d[10])}</p></div>
-     ${d[3]?`<div><h3>原文</h3><p class="gen">${esc(d[3])}</p></div>`:''}
-     ${d[7].length?`<div class="chips">${d[7].map(s=>`<button class="chip" data-go="${s}">${SCENES.find(x=>x[0]===s)[1]}</button>`).join("")}</div>`:''}
-   </div>`:''}
-   <div class="actions"><button data-act="open">${open?'閉じる':'現代語訳と原文を読む'}</button>
-   <button class="fav" data-act="fav" aria-pressed="${fav}">${fav?'しおり済み':'しおりを挟む'}</button></div>
-  </article>`;
-}
-function listHtml(items){
-  if(!items.length)return `<p class="empty">当てはまる章がありません。言葉を変えるか、悩みの入口から探してください。</p>`;
-  const shown=items.slice(0,st.limit);
-  return `<div class="list">${shown.map(card).join("")}</div>`+(items.length>st.limit?`<button class="morebtn" data-act="more">続きを見る（残り${items.length-st.limit}章）</button>`:'');
 }
 function search(q){
   const hitScenes=Object.keys(HINTS).filter(k=>HINTS[k].some(w=>q.includes(w)));
@@ -222,77 +311,147 @@ function search(q){
   scored.sort((a,b)=>b[0]-a[0]||a[1][0]-b[1][0]);
   return {items:scored.map(x=>x[1]),hitScenes,hitTokus};
 }
-function today(){
-  const top=D.filter(d=>d[9]===3&&d[4].length<90); if(!top.length)return "";
-  const now=new Date(),k=now.getFullYear()*372+now.getMonth()*31+now.getDate();
-  const d=top[k%top.length];
-  return `<section class="today"><span class="label">今日の一章　${ref(d)}</span>
-    <div class="tate">${esc(d[4])}</div><p class="hito">${esc(d[5])}</p>
-    <button class="linkish" data-jump="${d[0]}">この章を読む</button></section>`;
+
+/* ---------- 画面 ---------- */
+const st={stack:[{v:"home"}],ctxs:{},limit:30,seg:"yaku",editing:null};
+const cur=()=>st.stack[st.stack.length-1];
+const tabOf=v=>({home:"home",toku:"home",scenes:"scenes",scene:"scenes",search:"scenes",all:"all",record:"record"})[v]||null;
+
+const V={};
+V.home=()=>{
+  const nodes=TOKUS.map(t=>`<button class="node t-${t[0]}" style="left:${t[7][0]/390*100}%;top:${t[7][1]/300*100}%" data-toku="${t[0]}" aria-label="${t[1]}徳　${t[4]}"><b>${t[1]}</b><small>${t[2]}・${D.filter(d=>(d[11]||[])[0]===t[0]).length}章</small></button>`).join("");
+  const P=Object.fromEntries(TOKUS.map(t=>[t[1],t[7]]));
+  const star=["礼","義","仁","信","智"].map(k=>P[k].join(",")).join(" ");
+  const d=pickToday();const short=d[4].length<=34;
+  return `<header class="top"><span class="brand">経営者の論語</span><span class="date">${kanDate(new Date())}</span></header>
+  <section class="ring" aria-label="五徳から引く">
+    <svg viewBox="0 0 390 300" fill="none" aria-hidden="true"><circle cx="195" cy="150" r="112" stroke="var(--line)"></circle><polygon points="${star}" stroke="var(--line)" stroke-dasharray="2 5"></polygon></svg>
+    ${nodes}<div class="center"><b>仁はすべての土台</b><small>磨きたい徳を選ぶ</small></div>
+  </section>
+  <article class="today">
+    <div class="head"><span class="seal">今朝の一章</span>${weekDots()}</div>
+    <button class="body" data-open="${d[0]}" data-ctx="today">
+      <span class="hito">${esc(d[5])}</span>${short?`<span class="tate">${esc(d[4].replace(/^子曰く、/,""))}</span>`:""}
+    </button>
+    <span class="ref">${ref(d)}　${tmarks(d)}</span>
+    ${askBlock(d,"ans-today")}
+  </article>`;
+};
+V.toku=({id})=>{
+  const t=tk(id);let items=D.filter(d=>(d[11]||[]).includes(id));
+  const sf=cur().sf;
+  const scs=SCENES.filter(s=>items.some(d=>d[9]>0&&d[7].includes(s[0])));
+  if(sf)items=items.filter(d=>d[9]>0&&d[7].includes(sf));
+  items=items.slice().sort((a,b)=>((b[11][0]===id)-(a[11][0]===id))||(b[9]-a[9])||(a[0]-b[0]));
+  return `<button class="link" data-act="back">←　五徳の環へ</button>
+  <header class="tokuhead t-${id}"><span class="big">${t[1]}</span><span><b>${t[4]}</b><small>${t[2]}・${t[3]}　${t[5]}　${D.filter(d=>(d[11]||[])[0]===id).length}章</small></span></header>
+  <div class="chips t-${id}"><span class="chiplabel">悩みで絞る</span><button class="chip" data-sf="" aria-pressed="${!sf}">すべて</button>${scs.map(s=>`<button class="chip" data-sf="${s[0]}" aria-pressed="${sf===s[0]}">${s[1]}</button>`).join("")}</div>
+  ${rowsHtml(items,"toku")}
+  <p class="note">${id==="jin"?`<b>仁はすべての土台　</b>ほかの四徳は、仁があってはじめて独り歩きしません。`:`<b>仁を忘れずに　</b>${t[6]}`}</p>`;
+};
+V.scenes=()=>`<header class="top"><span class="brand">経営者の論語</span><span class="date">${kanDate(new Date())}</span></header>
+  <form class="search" data-search role="search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="color:var(--muted)"><circle cx="7" cy="7" r="5"></circle><path d="M11 11l4 4"></path></svg>
+    <input id="q" type="search" placeholder="言葉で探す　例：部下が動かない、後継者" autocomplete="off"></form>
+  <section class="stack" style="gap:4px"><h2>いま、何に悩んでいますか</h2>
+  <div>${SCENES.map(s=>`<button class="scene" data-scene="${s[0]}"><span><b>${s[1]}</b><small>${s[2]}</small></span><span class="cnt">${D.filter(d=>d[9]>0&&d[7].includes(s[0])).length}章</span></button>`).join("")}</div></section>`;
+V.scene=({id})=>{
+  const s=SCENES.find(x=>x[0]===id),c=cur();
+  let items=D.filter(d=>d[9]>0&&d[7].includes(id));
+  const tc={};items.forEach(d=>(d[11]||[]).forEach((t,i)=>tc[t]=(tc[t]||0)+(i?1:2)));
+  const domi=Object.keys(tc).sort((a,b)=>tc[b]-tc[a]).slice(0,2);
+  const emos=EMOS.filter(e=>items.some(d=>d[8].includes(e)));
+  if(c.emo)items=items.filter(d=>d[8].includes(c.emo));
+  if(c.tf)items=items.filter(d=>(d[11]||[]).includes(c.tf));
+  return `<button class="link" data-act="back">←　悩みの一覧へ</button>
+  <header class="stack" style="gap:6px"><h2 style="font-size:1.2rem">${s[1]}</h2>
+  <p class="muted" style="font-size:.82rem">${s[2]}。効きそうな順に並べています。${domi.length?`この悩みで多く説かれるのは ${domi.map(t=>`<span class="tmark t-${t}">${tk(t)[1]}徳</span>`).join(" と ")}。`:""}</p></header>
+  <div class="chips"><span class="chiplabel">五徳</span>${TOKUS.map(t=>`<button class="chip t-${t[0]}" data-tf="${t[0]}" aria-pressed="${c.tf===t[0]}">${t[1]}</button>`).join("")}</div>
+  <div class="chips"><span class="chiplabel">感情</span>${emos.map(e=>`<button class="chip" data-emo="${e}" aria-pressed="${c.emo===e}">${e}</button>`).join("")}</div>
+  ${rowsHtml(rank(items,id),"scene")}`;
+};
+V.search=({q})=>{
+  const r=search(q);
+  return `<button class="link" data-act="back">←　悩みの一覧へ</button>
+  <h2 style="font-size:1.1rem">「${esc(q)}」　${r.items.length}章</h2>
+  ${r.hitScenes.length||r.hitTokus.length?`<div class="chips"><span class="chiplabel">関連</span>${r.hitScenes.map(s=>`<button class="chip" data-scene="${s}">${SCENES.find(x=>x[0]===s)[1]}</button>`).join("")}${r.hitTokus.map(t=>`<button class="chip" data-toku="${t}">${tk(t)[1]}徳</button>`).join("")}</div>`:""}
+  ${rowsHtml(r.items,"search")}`;
+};
+V.all=({book=0})=>`<header class="top"><span class="brand">全章</span><span class="date">二十篇・四百九十九章</span></header>
+  <div class="chips">${BOOKS.map((b,i)=>`<button class="chip" data-book="${i}" aria-pressed="${book===i}">${b}</button>`).join("")}</div>
+  ${rowsHtml(D.filter(d=>d[1]===book),"all")}`;
+V.record=()=>{
+  const c=tokuCounts(),total=Object.values(c).reduce((a,b)=>a+b,0),max=Math.max(1,...Object.values(c));
+  const order=["jin","gi","rei","chi","shin"];
+  const least=order.slice().sort((a,b)=>c[a]-c[b])[0],most=order.slice().sort((a,b)=>c[b]-c[a])[0];
+  const ans=allAnswers(),fv=[...favs()].map(byN).filter(Boolean);
+  const sk=streak();
+  return `<header class="stack" style="gap:4px"><span class="brand" style="font-size:1.25rem">記録</span>
+    <p class="muted" style="font-size:.8rem">${ans.length?(sk?`${sk}日つづいています。`:"今日の一章に答えると、また記録が始まります。"):"章の問いに一行で答えると、ここに残ります。"}同じ章に戻ると、過去の答えと並べて読めます。</p></header>
+  ${weekDots()}
+  <section class="panel"><span class="lbl">この三十日に向き合った徳</span>
+    <div class="bars">${order.map(k=>`<div class="bar t-${k}"><span>${c[k]}</span><i style="height:${Math.round(c[k]/max*90)}px"></i><b>${tk(k)[1]}</b></div>`).join("")}</div>
+    ${total>=3?`<p style="font-size:.85rem;border-top:1px solid var(--line);padding-top:10px"><span class="tmark t-${most}">${tk(most)[1]}</span> が多く、<span class="tmark t-${least}">${tk(least)[1]}</span> が少なめです。${tk(least)[1]}の章を一つ読むと、釣り合いが取れます。</p>
+      <button class="link" data-toku="${least}" style="font-weight:700">${tk(least)[1]}徳の章を読む　→</button>`
+      :`<p class="muted" style="font-size:.82rem;border-top:1px solid var(--line);padding-top:10px">三つ以上答えると、どの徳に偏っているかが見えてきます。</p>`}
+  </section>
+  <section><h2>最近の答え</h2>${ans.length?ans.slice(0,20).map(a=>{const d=byN(a.n),t=(d[11]||[])[0];st.ctxs.log=(st.ctxs.log||[]);return `<button class="logrow" data-open="${a.n}" data-ctx="log"><span class="d">${md(a.d)}</span><span class="c"><small>${t?`<span class="tmark t-${t}">${tk(t)[1]}</span>　`:""}${ref(d)}</small><span>${esc(a.t)}</span></span></button>`}).join(""):`<p class="empty">まだ答えがありません。五徳のページの「今朝の一章」から始められます。</p>`}</section>
+  <section><h2>しおり</h2>${fv.length?rowsHtml(fv,"fav"):`<p class="empty">章を開いて右上の栞を押すと、ここに集まります。</p>`}</section>`;
+};
+V.ch=({n,ctx})=>{
+  const d=byN(n),fav=favs().has(n);
+  const k=d[4],len=k.length;
+  const lead=len<=36
+    ?`<section class="lead-side"><div class="l"><div class="metaline"><span class="ref">${ref(d)}</span><span class="marks">${seal(d)}${tmarks(d)}</span></div><p class="ch-hito">${esc(d[5])}</p></div><p class="tate">${esc(k)}</p></section>`
+    :`<div class="metaline"><span class="ref">${ref(d)}</span><span class="marks">${seal(d)}${tmarks(d)}</span></div><p class="ch-hito">${esc(d[5])}</p>${len<=110?`<p class="tate-full">${esc(k)}</p>`:`<p class="yoko">${esc(k)}</p>`}`;
+  const past=(store.answers[n]||[]).filter(x=>x.d!==today).sort((a,b)=>a.d<b.d?1:-1);
+  const list=st.ctxs[ctx]||[];const i=list.indexOf(n);
+  const prev=i>0?list[i-1]:null,next=i>=0&&i<list.length-1?list[i+1]:null;
+  const seg=st.seg;
+  return `<div class="chhead"><button class="link" data-act="back">←　戻る</button>
+    <button class="bm" data-act="fav" data-n="${n}" aria-pressed="${fav}" aria-label="${fav?"しおりを外す":"しおりを挟む"}"><svg width="18" height="22" viewBox="0 0 18 22" stroke-width="1.5" aria-hidden="true"><path d="M2 1h14v19l-7-5-7 5z"></path></svg></button></div>
+  ${lead}
+  <section class="qbox"><span class="lbl">問い</span>${askBlock(d,"ans-ch")}
+    ${past.length?`<div class="past">${past.slice(0,3).map(x=>`<div><span>${md(x.d)}</span><span>${esc(x.t)}</span></div>`).join("")}</div>`:""}</section>
+  <section class="stack" style="gap:10px">
+    <div class="seg"><button data-seg="yaku" aria-pressed="${seg==="yaku"}">現代語訳</button>${d[3]?`<button data-seg="gen" aria-pressed="${seg==="gen"}">原文</button>`:""}</div>
+    ${seg==="gen"&&d[3]?`<p class="gen">${esc(d[3])}</p><span class="src">ウィキソース『論語』</span>`:`<p class="text">${esc(d[10])}</p><span class="src">下村湖人『現代訳論語』</span>`}
+    ${d[7].length?`<div class="chips"><span class="chiplabel">この章が効く悩み</span>${d[7].map(s=>`<button class="chip" data-scene="${s}">${SCENES.find(x=>x[0]===s)[1]}</button>`).join("")}</div>`:""}
+  </section>
+  ${list.length>1?`<div class="pager"><button data-go-ch="${prev||""}" ${prev?"":"disabled"}>←　前の章</button><button data-go-ch="${next||""}" ${next?"":"disabled"}>次の章　→</button></div>`:""}`;
+};
+
+function render(keepScroll){
+  const c=cur();
+  view.innerHTML=V[c.v](c);
+  const tab=tabOf(c.v);
+  document.querySelectorAll("nav.tabbar button").forEach(b=>b.toggleAttribute("aria-current",false)||(tab===b.dataset.tab&&b.setAttribute("aria-current","page")));
+  if(!keepScroll)window.scrollTo(0,0);
 }
-function render(){
-  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===st.tab));
-  let h="";
-  if(st.q){
-    const r=search(st.q);
-    h=`<div class="resulthead"><h2>「${esc(st.q)}」で見つかった章　${r.items.length}</h2>
-      ${r.hitScenes.length||r.hitTokus.length?`<div class="chips">${r.hitScenes.map(s=>`<button class="chip" data-go="${s}">${SCENES.find(x=>x[0]===s)[1]}</button>`).join("")}${r.hitTokus.map(t=>`<button class="chip" data-toku="${t}">${tk(t)[1]}徳</button>`).join("")}</div>`:''}</div>`+listHtml(r.items);
-  }else if(st.tab==="home"&&!st.scene){
-    h=today()+`<section class="stack" style="gap:12px"><h2>いま、何に悩んでいますか</h2>
-      <div class="scenes">${SCENES.map(s=>`<button class="scene" data-go="${s[0]}"><span><b>${s[1]}</b><span class="sub">${s[2]}</span></span><span class="cnt">${D.filter(d=>d[9]>0&&d[7].includes(s[0])).length}章</span></button>`).join("")}</div></section>`;
-  }else if(st.tab==="home"){
-    const s=SCENES.find(x=>x[0]===st.scene);
-    let items=D.filter(d=>d[9]>0&&d[7].includes(st.scene));
-    const emos=EMOS.filter(e=>items.some(d=>d[8].includes(e)));
-    const tc={};items.forEach(d=>(d[11]||[]).forEach((t,i)=>tc[t]=(tc[t]||0)+(i?1:2)));
-    const domi=Object.keys(tc).sort((a,b)=>tc[b]-tc[a]).slice(0,2);
-    if(st.emo)items=items.filter(d=>d[8].includes(st.emo));
-    if(st.tf)items=items.filter(d=>(d[11]||[]).includes(st.tf));
-    h=`<div class="resulthead"><button class="back" data-act="back">← 悩みの一覧へ</button><h2>${s[1]}</h2><p class="lead">${s[2]}。効きそうな順に並べています。${domi.length?`この悩みで多く説かれるのは ${domi.map(t=>`<span class="tbadge t-${t}">${tk(t)[1]}徳</span>`).join(" と ")} です。`:''}</p>
-      <div class="chips"><span class="chiplabel">五徳</span>${TOKUS.map(t=>`<button class="chip" data-tf="${t[0]}" aria-pressed="${st.tf===t[0]}">${t[1]}</button>`).join("")}</div>
-      <div class="chips"><span class="chiplabel">感情</span>${emos.map(e=>`<button class="chip" data-emo="${e}" aria-pressed="${st.emo===e}">${e}</button>`).join("")}</div></div>`+listHtml(rank(items,st.scene));
-  }else if(st.tab==="toku"&&!st.toku){
-    h=`<section class="stack" style="gap:12px"><h2>五徳から引く</h2>
-      <p class="lead">徳とは「生まれたままの素直な心で生きること」。そこに行動があってこそ徳になります。磨きたい徳を選んでください。</p>
-      <div class="tokus">${TOKUS.map((t,i)=>`<button class="toku t-${t[0]} ${i===0?'base':''}" data-toku="${t[0]}"><span class="kanji">${t[1]}</span><span class="gyo">${t[2]}・${t[3]}${i===0?'　すべての徳の土台':''}　${D.filter(d=>(d[11]||[])[0]===t[0]).length}章</span><b>${t[4]}</b><span class="sub">${t[5]}</span></button>`).join("")}</div></section>
-      <section class="chuyo"><h3>中庸であれ</h3><p>仁を欠いた徳は、独り歩きします。</p>
-      <ul><li>仁のない義は「正義のためには手段を選ばず」になる</li><li>仁のない礼は、実のこもらない虚礼になる</li><li>仁のない智は、自分さえ良ければという利己の知恵になる</li><li>仁のない信は、狂信になる</li></ul></section>`;
-  }else if(st.tab==="toku"){
-    const t=tk(st.toku);
-    let items=D.filter(d=>(d[11]||[]).includes(st.toku));
-    const scs=SCENES.filter(s=>items.some(d=>d[9]>0&&d[7].includes(s[0])));
-    if(st.sf)items=items.filter(d=>d[9]>0&&d[7].includes(st.sf));
-    items=items.slice().sort((a,b)=>((b[11][0]===st.toku)-(a[11][0]===st.toku))||(b[9]-a[9])||(a[0]-b[0]));
-    h=`<div class="resulthead"><button class="back" data-act="back">← 五徳の一覧へ</button>
-      <div class="tokuhead t-${t[0]}"><span class="kanji">${t[1]}</span><div><h2>${t[1]}徳　${t[4]}</h2><p class="lead">${t[2]}・${t[3]}。${t[5]}。</p></div></div>
-      <div class="chips"><span class="chiplabel">悩みと掛け合わせる</span>${scs.map(s=>`<button class="chip" data-sf="${s[0]}" aria-pressed="${st.sf===s[0]}">${s[1]}</button>`).join("")}</div></div>`+listHtml(items);
-  }else if(st.tab==="all"){
-    const items=D.filter(d=>d[1]===st.book);
-    h=`<div class="books">${BOOKS.map((b,i)=>`<button class="chip" data-book="${i}" aria-pressed="${st.book===i}">${b}</button>`).join("")}</div>`+listHtml(items);
-  }else{
-    h=`<h2>しおりを挟んだ章</h2><p class="lead">しおりはこの端末のブラウザに保存されます。</p>`+listHtml(D.filter(d=>favs.has(d[0])));
-  }
-  view.innerHTML=h;
-}
+function go(v,opts={}){st.limit=30;st.editing=null;if(v.v==="ch")st.seg="yaku";st.stack.push(v);render()}
+function replaceTop(v){st.limit=30;st.editing=null;st.stack[st.stack.length-1]=v;render()}
+
 document.addEventListener("click",e=>{
-  const t=e.target.closest("button"); if(!t)return;
-  if(t.dataset.tab){st.tab=t.dataset.tab;st.scene=null;st.emo=null;st.toku=null;st.tf=null;st.sf=null;st.q="";$("#q").value="";st.limit=20}
-  else if(t.dataset.toku){st.tab="toku";st.toku=t.dataset.toku;st.sf=null;st.q="";$("#q").value="";st.limit=20;window.scrollTo(0,0)}
-  else if(t.dataset.tf){st.tf=st.tf===t.dataset.tf?null:t.dataset.tf;st.limit=20}
-  else if(t.dataset.sf){st.sf=st.sf===t.dataset.sf?null:t.dataset.sf;st.limit=20}
-  else if(t.dataset.go){st.tab="home";st.scene=t.dataset.go;st.emo=null;st.tf=null;st.q="";$("#q").value="";st.limit=20;window.scrollTo(0,0)}
-  else if(t.dataset.emo){st.emo=st.emo===t.dataset.emo?null:t.dataset.emo;st.limit=20}
-  else if(t.dataset.book){st.book=+t.dataset.book;st.limit=20}
-  else if(t.dataset.jump){const d=D.find(x=>x[0]===+t.dataset.jump);st.tab="all";st.book=d[1];st.limit=999;st.open.add(d[0]);render();
-    const el=document.querySelector(`[data-n="${d[0]}"]`);if(el)el.scrollIntoView({block:"start"});return}
-  else if(t.dataset.act==="back"){st.scene=null;st.emo=null;st.toku=null;st.tf=null;st.sf=null}
-  else if(t.dataset.act==="more"){st.limit+=20}
-  else if(t.dataset.act){const n=+t.closest(".card").dataset.n;
-    if(t.dataset.act==="open"){st.open.has(n)?st.open.delete(n):st.open.add(n)}
-    else{favs.has(n)?favs.delete(n):favs.add(n);saveFav()}}
-  else return;
-  render();
+  const t=e.target.closest("button");if(!t||t.getAttribute("type")==="submit")return;
+  const ds=t.dataset;
+  if(ds.tab){st.stack=[{v:ds.tab}];st.limit=30;render();return}
+  if(ds.open){const ctx=ds.ctx||"x";if(ctx==="today")st.ctxs.today=[+ds.open];if(ctx==="log")st.ctxs.log=allAnswers().map(a=>a.n).filter((n,i,a)=>a.indexOf(n)===i);go({v:"ch",n:+ds.open,ctx});return}
+  if(ds.goCh){replaceTop({...cur(),n:+ds.goCh});return}
+  if(ds.toku){go({v:"toku",id:ds.toku});return}
+  if(ds.scene){go({v:"scene",id:ds.scene});return}
+  if(ds.sf!==undefined){cur().sf=ds.sf||null;st.limit=30;render(true);return}
+  if(ds.tf){const c=cur();c.tf=c.tf===ds.tf?null:ds.tf;st.limit=30;render(true);return}
+  if(ds.emo){const c=cur();c.emo=c.emo===ds.emo?null:ds.emo;st.limit=30;render(true);return}
+  if(ds.book){cur().book=+ds.book;st.limit=30;render(true);return}
+  if(ds.seg){st.seg=ds.seg;render(true);return}
+  if(ds.act==="back"){if(st.stack.length>1)st.stack.pop();else st.stack=[{v:"home"}];st.editing=null;render();return}
+  if(ds.act==="more"){st.limit+=30;render(true);return}
+  if(ds.act==="redo"){st.editing=+ds.n;render(true);const i=view.querySelector(".ask input");if(i)i.focus();return}
+  if(ds.act==="fav"){const n=+ds.n,f=favs();f.has(n)?f.delete(n):f.add(n);store.fav=[...f];save();render(true);return}
 });
-let timer;$("#q").addEventListener("input",e=>{clearTimeout(timer);timer=setTimeout(()=>{st.q=e.target.value.trim();st.limit=20;render()},200)});
+document.addEventListener("submit",e=>{
+  const f=e.target;e.preventDefault();
+  if(f.dataset.form){const n=+f.dataset.form;addAnswer(n,f.querySelector("input").value);st.editing=null;render(true);return}
+  if(f.hasAttribute("data-search")){const q=f.querySelector("input").value.trim();if(q)go({v:"search",q})}
+});
 render();
 </script>
