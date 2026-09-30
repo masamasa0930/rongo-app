@@ -21,6 +21,29 @@ toku = {}
 for f in sorted(glob.glob(os.path.join(DATA, "tout_*.json"))):
     for o in json.load(open(f, encoding="utf-8")):
         toku[o["n"]] = [t for t in o.get("toku", []) if t in {"jin", "gi", "rei", "chi", "shin"}][:2]
+RUBY_RE = re.compile(r"《[^》]*》|｜")
+
+
+def fix_iwaku(rb):
+    """「曰く」の読みを話し手でそろえる。孔子は「のたまわく」、ほかの人は「いわく」。"""
+    def repl(m):
+        after = rb[m.end():m.end() + 1]
+        if after not in ("く", "わ"):
+            return m.group(0)
+        head = RUBY_RE.sub("", rb[:m.start()])
+        conf = head.endswith("孔子") or head.endswith("夫子") or (
+            head.endswith("子") and (len(head) == 1 or not re.match(r"[\u4e00-\u9fff]", head[-2])))
+        yomi = "のたま" if conf else "い"
+        if after != "わ":
+            yomi += "わ"
+        return "曰《" + yomi + "》"
+    return re.sub(r"曰《[^》]*》", repl, rb)
+
+
+ruby = {}
+for f in sorted(glob.glob(os.path.join(DATA, "rout_*.json"))):
+    for o in json.load(open(f, encoding="utf-8")):
+        ruby[o["n"]] = fix_iwaku(o.get("ruby", ""))
 for f in sorted(glob.glob(os.path.join(DATA, "out_*.json"))):
     for o in json.load(open(f, encoding="utf-8")):
         tags[o["n"]] = o
@@ -41,8 +64,14 @@ for o in sh:
     if rel > 0 and not scenes:
         rel = 0
     yaku = re.sub(r"[ \t　]+\n", "\n", o["text"]).strip()
+    rb = ruby.get(o["n"], "")
+    if rb and re.sub(r"《[^》]*》|｜", "", rb) != t["kaki"].strip():
+        problems.append(f"n={o['n']} 読み仮名が本文と一致しない")
+        rb = ""
+    if not rb:
+        rb = t["kaki"].strip()
     rows.append([o["n"], o["bi"] - 1, o["no"], genbun, t["kaki"].strip(), t["hito"].strip(),
-                 t.get("toi", "").strip() if rel > 0 else "", scenes, emo, rel, yaku, toku.get(o["n"], [])])
+                 t.get("toi", "").strip() if rel > 0 else "", scenes, emo, rel, yaku, toku.get(o["n"], []), rb])
 
 if problems:
     print("\n".join(problems), file=sys.stderr)
@@ -53,4 +82,5 @@ out = tpl.replace("/*DATA*/[]", payload)
 open(os.path.join(HERE, "artifact.html"), "w", encoding="utf-8").write(out)
 HEAD = '<!doctype html>\n<html lang="ja">\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n<style>body{margin:0}</style>\n'
 open(os.path.join(HERE, "index.html"), "w", encoding="utf-8").write(HEAD + out)
+print("読み仮名つき", sum(1 for r in rows if "《" in r[12]), "章")
 print(f"{len(rows)}章 / index.html {len(out.encode())//1024}KB / rel分布", {r: sum(1 for x in rows if x[9] == r) for r in (3, 2, 1, 0)})
